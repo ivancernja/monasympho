@@ -19,6 +19,27 @@ class MonaRepository extends ServiceEntityRepository
         parent::__construct($registry, Mona::class);
     }
 
+    public function transform(Mona $mona)
+{
+    return [
+            'id'    => (int) $mona->getId(),
+            'title' => (string) $mona->getTitle(),
+            'count' => (int) $mona->getCount()
+    ];
+}
+
+public function transformAll()
+{
+    $mona = $this->findAll();
+    $monaArray = [];
+
+    foreach ($mona as $mona) {
+        $monaArray[] = $this->transform($mona);
+    }
+
+    return $monaArray;
+}
+
     // /**
     //  * @return Mona[] Returns an array of Mona objects
     //  */
